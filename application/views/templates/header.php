@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
   <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/vendor/animate.css/animate.min.css">
   <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/vendor/sweetalert2/dist/sweetalert2.min.css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/vendor/quill/dist/quill.core.css">
   <!-- Argon CSS -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/css/argon.min.css" type="text/css">
   <!-- Core -->

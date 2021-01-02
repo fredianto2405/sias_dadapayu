@@ -23,7 +23,7 @@
         <!-- Nav items -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link <?php echo $uri == 'beranda' ? 'active' : ''; ?>" href="<?php echo base_url('beranda'); ?>">
+            <a class="nav-link <?php echo $uri == 'beranda' ? 'active' : ''; ?>" href="<?php echo base_url('petugas/beranda'); ?>">
               <i class="fas fa-home text-primary"></i>
               <span class="nav-link-text">Beranda</span>
             </a>
@@ -39,19 +39,19 @@
         <!-- Nav items -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link <?php echo $uri == 'surat-masuk' ? 'active' : ''; ?>" href="<?php echo base_url('surat-masuk'); ?>">
+            <a class="nav-link <?php echo $uri == 'surat-masuk' ? 'active' : ''; ?>" href="<?php echo base_url('petugas/surat-masuk'); ?>">
               <i class="fas fa-inbox text-orange"></i>
               <span class="nav-link-text">Surat Masuk</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link <?php echo $uri == 'surat-keluar' ? 'active' : ''; ?>" href="<?php echo base_url('surat-keluar'); ?>">
+            <a class="nav-link <?php echo $uri == 'surat-keluar' ? 'active' : ''; ?>" href="<?php echo base_url('petugas/surat-keluar'); ?>">
               <i class="fas fa-paper-plane text-info"></i>
               <span class="nav-link-text">Surat Keluar</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link <?php echo $uri == 'pengajuan-surat' ? 'active' : ''; ?>" href="<?php echo base_url('pengajuan-surat'); ?>">
+            <a class="nav-link <?php echo $uri == 'pengajuan-surat' ? 'active' : ''; ?>" href="<?php echo base_url('petugas/pengajuan-surat'); ?>">
               <i class="ni ni-single-copy-04 text-pink"></i>
               <span class="nav-link-text">Pengajuan Surat</span>
             </a>
@@ -67,13 +67,13 @@
         <!-- Nav items -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link <?php echo $uri == 'laporan-surat-masuk' ? 'active' : ''; ?>" href="<?php echo base_url('laporan-surat-masuk'); ?>">
+            <a class="nav-link <?php echo $uri == 'laporan-surat-masuk' ? 'active' : ''; ?>" href="<?php echo base_url('petugas/laporan-surat-masuk'); ?>">
               <i class="ni ni-chart-bar-32 text-primary"></i>
               <span class="nav-link-text">Surat Masuk</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link <?php echo $uri == 'laporan-surat-keluar' ? 'active' : ''; ?>" href="<?php echo base_url('laporan-surat-keluar'); ?>">
+            <a class="nav-link <?php echo $uri == 'laporan-surat-keluar' ? 'active' : ''; ?>" href="<?php echo base_url('petugas/laporan-surat-keluar'); ?>">
               <i class="ni ni-chart-bar-32 text-green"></i>
               <span class="nav-link-text">Surat Keluar</span>
             </a>
@@ -89,7 +89,7 @@
         <!-- Nav items -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link <?php echo $uri == 'klasifikasi-surat' ? 'active' : ''; ?>" href="<?php echo base_url('klasifikasi-surat'); ?>">
+            <a class="nav-link <?php echo $uri == 'klasifikasi-surat' ? 'active' : ''; ?>" href="<?php echo base_url('petugas/klasifikasi-surat'); ?>">
               <i class="ni ni-book-bookmark text-red"></i>
               <span class="nav-link-text">Klasifikasi Surat</span>
             </a>
