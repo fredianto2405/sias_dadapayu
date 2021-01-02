@@ -167,17 +167,17 @@
       <div class="header-body">
         <div class="row align-items-center py-4">
           <div class="col-lg-6 col-7">
-            <h6 class="h2 text-white d-inline-block mb-0">Surat Masuk</h6>
+            <h6 class="h2 text-white d-inline-block mb-0">Surat Keluar</h6>
             <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
               <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                 <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
                 <li class="breadcrumb-item"><a href="<?php echo base_url('beranda'); ?>">Beranda</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Surat Masuk</li>
+                <li class="breadcrumb-item active" aria-current="page">Surat Keluar</li>
               </ol>
             </nav>
           </div>
           <div class="col-lg-6 col-5 text-right">
-            <button type="button" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#modal_tambah">Tambah Surat Masuk</button>
+            <button type="button" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#modal_tambah">Tambah Surat Keluar</button>
           </div>
         </div>
       </div>
@@ -190,7 +190,7 @@
         <div class="card">
           <!-- Card header -->
           <div class="card-header">
-            <h3 class="mb-0">Tabel Data Surat Masuk</h3>
+            <h3 class="mb-0">Tabel Data Surat Keluar</h3>
           </div>
           <!-- Light table -->
           <div class="table-responsive py-4">
@@ -201,7 +201,7 @@
                   <th style="width: 10%">Aksi</th>
                   <th style="width: 21%">Kode Klasifikasi</th>
                   <th style="width: 21%">Isi Ringkas</th>
-                  <th style="width: 21%">Dari</th>
+                  <th style="width: 21%">Kepada</th>
                   <th style="width: 21%">No. & Tgl. Surat</th>
                 </tr>
               </thead>
@@ -211,21 +211,21 @@
                   <th style="width: 10%">Aksi</th>
                   <th style="width: 21%">Kode Klasifikasi</th>
                   <th style="width: 21%">Isi Ringkas</th>
-                  <th style="width: 21%">Dari</th>
+                  <th style="width: 21%">Kepada</th>
                   <th style="width: 21%">No. & Tgl. Surat</th>
                 </tr>
               </tfoot>
               <tbody>
-                <?php foreach ($surat_masuk as $data) : ?>
+                <?php foreach ($surat_keluar as $data) : ?>
                   <tr>
                     <td><?php echo $no++; ?></td>
                     <td>
-                      <button type="button" onclick="edit('<?php echo $data['id_surat_masuk']; ?>')" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></button>
-                      <button type="button" onclick="hapus('<?php echo $data['id_surat_masuk']; ?>', '<?php echo $data['nomor_surat']; ?>')" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                      <button type="button" onclick="edit('<?php echo $data['id_surat_keluar']; ?>')" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></button>
+                      <button type="button" onclick="hapus('<?php echo $data['id_surat_keluar']; ?>', '<?php echo $data['nomor_surat']; ?>')" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
                     </td>
                     <td><?php echo $data['kode']; ?> - <?php echo $data['tentang']; ?></td>
                     <td><?php echo $data['isi_ringkas']; ?></td>
-                    <td><?php echo $data['dari']; ?></td>
+                    <td><?php echo $data['kepada']; ?></td>
                     <td>
                       Nomor Surat:<br>
                       <?php echo $data['nomor_surat']; ?><br>
@@ -250,7 +250,7 @@
   <div class="modal-dialog modal-lg modal-dialog-centered modal-" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title" id="modal-title-default">Tambah Surat Masuk</h6>
+        <h6 class="modal-title" id="modal-title-default">Tambah Surat Keluar</h6>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
@@ -271,8 +271,8 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="dari" class="form-control-label">Dari</label>
-                <input type="text" name="dari" id="dari" class="form-control" placeholder="Masukkan asal surat" required>
+                <label for="kepada" class="form-control-label">Kepada</label>
+                <input type="text" name="kepada" id="kepada" class="form-control" placeholder="Masukkan tujuan surat" required>
               </div>
             </div>
           </div>
@@ -313,7 +313,7 @@
   <div class="modal-dialog modal-lg modal-dialog-centered modal-" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title" id="modal-title-default">Ubah Surat Masuk</h6>
+        <h6 class="modal-title" id="modal-title-default">Ubah Surat Keluar</h6>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
@@ -335,8 +335,8 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="edit_dari" class="form-control-label">Dari</label>
-                <input type="text" name="edit_dari" id="edit_dari" class="form-control" placeholder="Masukkan asal surat" required>
+                <label for="edit_kepada" class="form-control-label">Kepada</label>
+                <input type="text" name="edit_kepada" id="edit_kepada" class="form-control" placeholder="Masukkan tujuan surat" required>
               </div>
             </div>
           </div>
@@ -376,7 +376,7 @@
   function hapus(id, nomor_surat) {
     let _id = id;
     Swal.fire({
-      title: 'Hapus Surat Masuk?',
+      title: 'Hapus Surat Keluar?',
       text: `${nomor_surat}`,
       type: 'question',
       showCancelButton: true,
@@ -388,7 +388,7 @@
     }).then((result) => {
       if (result.value) {
         $.ajax({
-          url: '<?php echo base_url('petugas/surat-masuk/hapus-surat') ?>',
+          url: '<?php echo base_url('petugas/surat-keluar/hapus-surat') ?>',
           method: "POST",
           data: {
             id: _id
@@ -425,13 +425,13 @@
 
   function edit(id) {
     $.ajax({
-      url: '<?php echo base_url('petugas/surat-masuk/detail-surat/') ?>' + id,
+      url: '<?php echo base_url('petugas/surat-keluar/detail-surat/') ?>' + id,
       type: "GET",
       dataType: "json",
       success: (response) => {
-        $('[name="edit_id"]').val(response.id_surat_masuk);
+        $('[name="edit_id"]').val(response.id_surat_keluar);
         $('[name="edit_id_klasifikasi_surat"]').val(response.id_klasifikasi_surat).change();
-        $('[name="edit_dari"]').val(response.dari);
+        $('[name="edit_kepada"]').val(response.kepada);
         $('[name="edit_nomor_surat"]').val(response.nomor_surat);
         $('[name="edit_tanggal_surat"]').val(response.tanggal_surat);
         $('[name="edit_isi_ringkas"]').val(response.isi_ringkas);
@@ -465,7 +465,7 @@
         let form = $('#form_tambah')[0];
         let isi_form = new FormData(form);
         $.ajax({
-          url: '<?php echo base_url('petugas/surat-masuk/simpan-surat') ?>',
+          url: '<?php echo base_url('petugas/surat-keluar/simpan-surat') ?>',
           method: "POST",
           data: isi_form,
           dataType: "json",
@@ -522,7 +522,7 @@
         let form = $('#form_edit')[0];
         let isi_form = new FormData(form);
         $.ajax({
-          url: '<?php echo base_url('petugas/surat-masuk/edit-surat') ?>',
+          url: '<?php echo base_url('petugas/surat-keluar/edit-surat') ?>',
           method: "POST",
           data: isi_form,
           dataType: "json",
