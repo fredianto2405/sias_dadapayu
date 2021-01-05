@@ -22,6 +22,29 @@ class Surat_keluar_model extends CI_Model
     return $this->db->get()->row_array();
   }
 
+  public function get_by_date($tanggal_mulai, $tanggal_selesai)
+  {
+    $this->db->select('*');
+    $this->db->from('surat_keluar');
+    $this->db->join('klasifikasi_surat', 'klasifikasi_surat.id_klasifikasi_surat = surat_keluar.id_klasifikasi_surat');
+    $this->db->join('pengguna', 'pengguna.id_pengguna = surat_keluar.id_pengguna');
+    $this->db->where('tanggal_surat >=', $tanggal_mulai);
+    $this->db->where('tanggal_surat <=', $tanggal_selesai);
+    return $this->db->get()->result_array();
+  }
+
+  public function count_by_month()
+  {
+    $month = date('m');
+    $year = date('Y');
+    $where = "MONTH(tanggal_surat) = '$month' AND YEAR(tanggal_surat) = '$year'";
+
+    $this->db->select('*');
+    $this->db->from('surat_keluar');
+    $this->db->where($where);
+    return $this->db->count_all_results();
+  }
+
   public function insert($data)
   {
     $response = ['status' => TRUE, 'title' => "Berhasil", 'text' => "Surat Keluar Disimpan"];

@@ -6,6 +6,7 @@ class Pengajuan_surat extends CI_Controller
   public function __construct()
   {
     parent::__construct();
+    is_petugas();
     $this->load->model('pengajuan_model', 'pengajuan');
   }
 
@@ -13,11 +14,13 @@ class Pengajuan_surat extends CI_Controller
   {
     $web['halaman'] = "Pengajuan Surat";
     $web['uri'] = $this->uri->segment(2);
+    $fetch['notifikasi'] = $this->pengajuan->get_by_status('0');
+    $fetch['total_notifikasi'] = $this->pengajuan->count_by_status('0');
     $fetch['no'] = 1;
     $fetch['pengajuan'] = $this->pengajuan->get_all();
     $this->load->view('templates/header', $web);
-    $this->load->view('templates/sidebar_petugas');
-    $this->load->view('pengajuan_petugas', $fetch);
+    $this->load->view('templates/sidebar_petugas', $fetch);
+    $this->load->view('pengajuan_petugas');
     $this->load->view('templates/footer');
   }
 

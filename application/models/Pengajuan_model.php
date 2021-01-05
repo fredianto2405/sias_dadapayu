@@ -20,6 +20,37 @@ class Pengajuan_model extends CI_Model
     return $this->db->get()->row_array();
   }
 
+  public function count_by_month()
+  {
+    $month = date('m');
+    $year = date('Y');
+    $where = "MONTH(tanggal_pengajuan) = '$month' AND YEAR(tanggal_pengajuan) = '$year'";
+
+    $this->db->select('*');
+    $this->db->from('pengajuan');
+    $this->db->where($where);
+    return $this->db->count_all_results();
+  }
+
+  public function get_by_status($status)
+  {
+    $this->db->select('pengajuan.*, pengguna.nama_pengguna, pengguna.status as status_pengguna, pengguna.data as data_pengguna, pengguna.foto');
+    $this->db->from('pengajuan');
+    $this->db->join('pengguna', 'pengguna.id_pengguna = pengajuan.id_pengguna');
+    $this->db->where('pengajuan.status', $status);
+    $this->db->limit(5);
+    return $this->db->get()->result_array();
+  }
+
+  public function count_by_status($status)
+  {
+    $this->db->select('pengajuan.*, pengguna.nama_pengguna, pengguna.status as status_pengguna, pengguna.data as data_pengguna');
+    $this->db->from('pengajuan');
+    $this->db->join('pengguna', 'pengguna.id_pengguna = pengajuan.id_pengguna');
+    $this->db->where('pengajuan.status', $status);
+    return $this->db->count_all_results();
+  }
+
   public function update($id_pengajuan, $data)
   {
     $response = ['status' => TRUE, 'title' => "Berhasil", 'text' => "Pengajuan Surat Diproses"];
