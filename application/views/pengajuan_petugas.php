@@ -58,7 +58,7 @@
                     <td><?php echo $no++; ?></td>
                     <td>
                       <?php if ($data['status'] == 0) : ?>
-                        <button type="button" onclick="proses('<?php echo $data['id_pengajuan']; ?>')" class="btn btn-sm btn-primary"><i class="fa fa-check-circle"></i></button>
+                        <button type="button" onclick="proses('<?php echo $data['id_pengajuan']; ?>')" class="btn btn-sm btn-success"><i class="fa fa-check-circle"></i></button>
                       <?php else : ?>
                         <button type="button" onclick="proses('<?php echo $data['id_pengajuan']; ?>')" class="btn btn-sm btn-primary"><i class="fa fa-plus-circle"></i></button>
                       <?php endif; ?>
@@ -551,7 +551,7 @@
           data = JSON.parse(response.data);
           $('[name="id_pengajuan"]').val(response.id_pengajuan);
           $('[name="jenis_surat"]').val(response.jenis_surat);
-          if (response.status == '1') {
+          if (response.status != '0') {
             $('[name="nomor_surat"]').val(response.nomor_surat);
             $('[name="nomor_surat"]').attr('readonly', true);
             $('.modal-footer').hide();

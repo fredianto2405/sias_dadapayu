@@ -48,6 +48,7 @@ class Landing extends CI_Controller
           'id_pengguna' => $pengguna['id_pengguna'],
           'nama' => $data_pengguna->nama,
           'hak_akses' => $pengguna['hak_akses'],
+          'data' => $pengguna['data'],
           'foto' => $pengguna['foto'],
         ];
         $this->session->set_userdata($data);
