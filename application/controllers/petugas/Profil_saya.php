@@ -19,7 +19,7 @@ class Profil_saya extends CI_Controller
     $fetch['total_notifikasi'] = $this->pengajuan->count_by_status('0');
     $fetch['pengguna'] = $this->pengguna->get_by_id($this->session->userdata('id_pengguna'));
     $this->load->view('templates/header', $web);
-    $this->load->view('templates/sidebar_pimpinan', $fetch);
+    $this->load->view('templates/sidebar_petugas', $fetch);
     $this->load->view('profil_saya');
     $this->load->view('templates/footer');
   }
