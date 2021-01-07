@@ -53,30 +53,34 @@
                 <?php
                 foreach ($pengajuan as $data) :
                   $data2 = json_decode($data['data_pengguna']);
+                  if ($data['status'] != 0) :
                 ?>
-                  <tr>
-                    <td><?php echo $no++; ?></td>
-                    <td>
-                      <?php if ($data['status'] == 0) : ?>
-                        <button type="button" onclick="proses('<?php echo $data['id_pengajuan']; ?>')" class="btn btn-sm btn-success"><i class="fa fa-check-circle"></i></button>
-                      <?php else : ?>
-                        <button type="button" onclick="proses('<?php echo $data['id_pengajuan']; ?>')" class="btn btn-sm btn-primary"><i class="fa fa-plus-circle"></i></button>
-                      <?php endif; ?>
-                    </td>
-                    <td><?php echo $data2->nama; ?></td>
-                    <td><?php echo $data['jenis_surat']; ?></td>
-                    <td><?php echo indonesian_date($data['tanggal_pengajuan']); ?></td>
-                    <td>
-                      <?php if ($data['status'] == 0) : ?>
-                        <i class="fa fa-spinner text-muted"></i> Menunggu
-                      <?php elseif ($data['status'] == 1) : ?>
-                        <i class="fa fa-tasks text-primary"></i> Diproses
-                      <?php else : ?>
-                        <i class="fa fa-check-double text-success"></i> Disetujui
-                      <?php endif; ?>
-                    </td>
-                  </tr>
-                <?php endforeach; ?>
+                    <tr>
+                      <td><?php echo $no++; ?></td>
+                      <td>
+                        <?php if ($data['status'] == 1) : ?>
+                          <button type="button" onclick="proses('<?php echo $data['id_pengajuan']; ?>')" class="btn btn-sm btn-success"><i class="fa fa-check-circle"></i></button>
+                        <?php else : ?>
+                          <button type="button" onclick="proses('<?php echo $data['id_pengajuan']; ?>')" class="btn btn-sm btn-primary"><i class="fa fa-plus-circle"></i></button>
+                        <?php endif; ?>
+                      </td>
+                      <td><?php echo $data2->nama; ?></td>
+                      <td><?php echo $data['jenis_surat']; ?></td>
+                      <td><?php echo indonesian_date($data['tanggal_pengajuan']); ?></td>
+                      <td>
+                        <?php if ($data['status'] == 0) : ?>
+                          <i class="fa fa-spinner text-muted"></i> Menunggu
+                        <?php elseif ($data['status'] == 1) : ?>
+                          <i class="fa fa-tasks text-primary"></i> Diproses
+                        <?php else : ?>
+                          <i class="fa fa-check-double text-success"></i> Disetujui
+                        <?php endif; ?>
+                      </td>
+                    </tr>
+                <?php
+                  endif;
+                endforeach;
+                ?>
               </tbody>
             </table>
           </div>
@@ -90,7 +94,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered modal-" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h6 class="modal-title" id="modal-title-default">Proses Pengajuan Surat</h6>
+          <h6 class="modal-title" id="modal-title-default">Konfirmasi Pengajuan Surat</h6>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
@@ -108,7 +112,7 @@
               <div class=" col-md-6">
                 <div class="form-group">
                   <label for="nomor_surat" class="form-control-label">Nomor Surat</label>
-                  <input type="text" name="nomor_surat" id="nomor_surat" class="form-control" placeholder="Masukkan nomor surat" required>
+                  <input type="text" name="nomor_surat" id="nomor_surat" class="form-control" placeholder="Masukkan nomor surat" readonly>
                 </div>
               </div>
             </div>
@@ -533,7 +537,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Proses Pengajuan</button>
+            <button type="submit" class="btn btn-primary">Konfirmasi</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
           </div>
         </form>
@@ -544,20 +548,17 @@
   <script type="text/javascript">
     function proses(id) {
       $.ajax({
-        url: '<?php echo base_url('petugas/pengajuan-surat/detail-pengajuan/') ?>' + id,
+        url: '<?php echo base_url('pimpinan/pengajuan-surat/detail-pengajuan/') ?>' + id,
         type: "GET",
         dataType: "json",
         success: (response) => {
           data = JSON.parse(response.data);
           $('[name="id_pengajuan"]').val(response.id_pengajuan);
           $('[name="jenis_surat"]').val(response.jenis_surat);
-          if (response.status != '0') {
-            $('[name="nomor_surat"]').val(response.nomor_surat);
-            $('[name="nomor_surat"]').attr('readonly', true);
+          $('[name="nomor_surat"]').val(response.nomor_surat);
+          if (response.status != '1') {
             $('.modal-footer').hide();
           } else {
-            $('[name="nomor_surat"]').val('');
-            $('[name="nomor_surat"]').removeAttr('readonly');
             $('.modal-footer').show();
           }
           if (response.jenis_surat == "Surat Keterangan Beda Nama") {
@@ -678,7 +679,7 @@
           let form = $('#form_proses')[0];
           let isi_form = new FormData(form);
           $.ajax({
-            url: '<?php echo base_url('petugas/pengajuan-surat/proses-pengajuan') ?>',
+            url: '<?php echo base_url('pimpinan/pengajuan-surat/konfirmasi-pengajuan') ?>',
             method: "POST",
             data: isi_form,
             dataType: "json",

@@ -19,6 +19,7 @@
 <script src="<?php echo base_url(); ?>/assets/vendor/jquery-validation/jquery.validate.min.js"></script>
 <script src="<?php echo base_url(); ?>/assets/vendor/jquery-validation/additional-methods.min.js"></script>
 <script src="<?php echo base_url(); ?>/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+
 <!-- Argon JS -->
 <script src="<?php echo base_url(); ?>/assets/js/argon.min.js"></script>
 </body>

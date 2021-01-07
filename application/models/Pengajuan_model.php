@@ -45,22 +45,28 @@ class Pengajuan_model extends CI_Model
     return $this->db->count_all_results();
   }
 
-  public function get_by_status($status)
+  public function get_by_status($status, $id_pengguna = '')
   {
     $this->db->select('pengajuan.*, pengguna.nama_pengguna, pengguna.status as status_pengguna, pengguna.data as data_pengguna, pengguna.foto');
     $this->db->from('pengajuan');
     $this->db->join('pengguna', 'pengguna.id_pengguna = pengajuan.id_pengguna');
     $this->db->where('pengajuan.status', $status);
+    if ($id_pengguna != '') {
+      $this->db->where('pengajuan.id_pengguna', $id_pengguna);
+    }
     $this->db->limit(5);
     return $this->db->get()->result_array();
   }
 
-  public function count_by_status($status)
+  public function count_by_status($status, $id_pengguna = '')
   {
     $this->db->select('pengajuan.*, pengguna.nama_pengguna, pengguna.status as status_pengguna, pengguna.data as data_pengguna');
     $this->db->from('pengajuan');
     $this->db->join('pengguna', 'pengguna.id_pengguna = pengajuan.id_pengguna');
     $this->db->where('pengajuan.status', $status);
+    if ($id_pengguna != '') {
+      $this->db->where('pengajuan.id_pengguna', $id_pengguna);
+    }
     return $this->db->count_all_results();
   }
 

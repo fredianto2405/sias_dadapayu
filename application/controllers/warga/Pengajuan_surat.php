@@ -14,10 +14,11 @@ class Pengajuan_surat extends CI_Controller
   {
     $web['halaman'] = "Pengajuan Surat";
     $web['uri'] = $this->uri->segment(2);
-    $fetch['notifikasi'] = $this->pengajuan->get_by_status('2');
-    $fetch['total_notifikasi'] = $this->pengajuan->count_by_status('2');
+    $id_pengguna = $this->session->userdata('id_pengguna');
+    $fetch['notifikasi'] = $this->pengajuan->get_by_status('2', $id_pengguna);
+    $fetch['total_notifikasi'] = $this->pengajuan->count_by_status('2', $id_pengguna);
     $fetch['no'] = 1;
-    $fetch['pengajuan'] = $this->pengajuan->get_by_pengguna($this->session->userdata('id_pengguna'));
+    $fetch['pengajuan'] = $this->pengajuan->get_by_pengguna($id_pengguna);
     $this->load->view('templates/header', $web);
     $this->load->view('templates/sidebar_warga', $fetch);
     $this->load->view('pengajuan_warga');
