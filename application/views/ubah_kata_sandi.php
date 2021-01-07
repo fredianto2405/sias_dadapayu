@@ -26,9 +26,10 @@
           <div class="card-header">
             <h3 class="mb-0">Ubah Kata Sandi</h3>
           </div>
-          <form action="">
+          <form action="" method="POST">
             <!-- Card body -->
             <div class="card-body">
+              <?php echo $this->session->flashdata('message'); ?>
               <div class="form-group">
                 <label for="kata_sandi_lama" class="form-control-label">Kata Sandi Lama</label>
                 <input type="password" name="kata_sandi_lama" id="kata_sandi_lama" class="form-control" placeholder="Masukkan kata sandi lama" required>
