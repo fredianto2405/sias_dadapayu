@@ -26,6 +26,12 @@
   <!-- Core -->
   <script src="<?php echo base_url(); ?>/assets/vendor/jquery/dist/jquery.min.js"></script>
   <script src="<?php echo base_url(); ?>/assets/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
+  <!-- Custom Style -->
+  <style>
+    .swal2-container {
+      z-index: 9999;
+    }
+  </style>
 </head>
 
 <body>

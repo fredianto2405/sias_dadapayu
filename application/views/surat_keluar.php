@@ -57,6 +57,7 @@
                   <tr>
                     <td><?php echo $no++; ?></td>
                     <td>
+                      <button type="button" onclick="lampiran('<?php echo $data['id_surat_keluar']; ?>')" class="btn btn-sm btn-primary"><i class="fa fa-copy"></i></button>
                       <button type="button" onclick="edit('<?php echo $data['id_surat_keluar']; ?>')" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></button>
                       <button type="button" onclick="hapus('<?php echo $data['id_surat_keluar']; ?>', '<?php echo $data['nomor_surat']; ?>')" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
                     </td>
@@ -208,6 +209,53 @@
     </div>
   </div>
 
+  <!-- modal lampiran -->
+  <div class="modal fade" id="modal_lampiran" tabindex="-1" role="dialog" aria-labelledby="modal_lampiran" aria-hidden="true">
+    <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="modal-title-default">Lampiran Surat Keluar</h6>
+          <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal_tambah_lampiran">Tambah Lampiran</button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group list-group-flush list my--3" id="lampiran">
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- modal tambah lampiran -->
+  <div class="modal fade" id="modal_tambah_lampiran" tabindex="-1" role="dialog" aria-labelledby="modal_tambah_lampiran" aria-hidden="true">
+    <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="modal-title-default">Tambah Lampiran</h6>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form role="form" id="form_tambah_lampiran" action="" method="POST">
+          <input type="hidden" name="id_surat_keluar" id="id_surat_keluar">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="judul" class="form-control-label">Judul</label>
+              <input type="text" name="judul" id="judul" class="form-control" placeholder="Masukkan judul lampiran" required>
+            </div>
+            <div class="form-group">
+              <label for="berkas" class="form-control-label">Berkas</label>
+              <input type="file" name="berkas" id="berkas" class="form-control" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Simpan</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <script type="text/javascript">
     function hapus(id, nomor_surat) {
       let _id = id;
@@ -283,6 +331,82 @@
       });
     }
 
+    function lampiran(id) {
+      $('[name="id_surat_keluar"]').val(id);
+      $.ajax({
+        url: '<?php echo base_url('petugas/surat-keluar/lampiran/') ?>' + id,
+        type: "GET",
+        dataType: "json",
+        success: (response) => {
+          $('#lampiran').empty();
+          var data = new Array();
+          var file = '<?php echo base_url('upload/surat_keluar/'); ?>'
+          for (var i = 0; i < response.length; i++) {
+            var row = '<li class="list-group-item px-0"><div class="row align-items-center"><div class="col ml--2"><h4 class="mb-0"><a href="' + file + response[i]['berkas'] + '" target="_blank">' + response[i]['judul'] + '</a></h4></div><div class="col-auto"><button type="button" class="btn btn-sm btn-danger" onclick="hapus_lampiran(' + response[i]['id_lampiran_surat_keluar'] + ')">Hapus</a></div></div></li>';
+            data.push(row);
+          }
+          $('#lampiran').append(data);
+          $('#modal_lampiran').modal('show');
+        },
+        error: (err) => {
+          Swal.fire({
+            type: 'error',
+            title: `Fetch Data : ${err}`
+          })
+        }
+      });
+    }
+
+    function hapus_lampiran(id) {
+      let _id = id;
+      Swal.fire({
+        title: 'Hapus Lampiran?',
+        type: 'question',
+        showCancelButton: true,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, Hapus',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Batal'
+      }).then((result) => {
+        if (result.value) {
+          $.ajax({
+            url: '<?php echo base_url('petugas/surat-keluar/hapus-lampiran') ?>',
+            method: "POST",
+            data: {
+              id: _id
+            },
+            dataType: "json",
+            success: (response) => {
+              if (response.status) {
+                $('#modal_lampiran').modal('hide');
+                Swal.fire({
+                  type: 'success',
+                  title: `${response.title}`,
+                  text: `${response.text}`,
+                  button: {
+                    text: "OK",
+                    value: "OK"
+                  }
+                }).then((value) => {
+                  location.reload();
+                });
+              } else {
+                Swal.fire({
+                  type: 'error',
+                  title: `${response.title}.`,
+                  text: `${response.text}.`
+                })
+              }
+            },
+            error: (ee) => {
+              console.log(` ee ${ee} `);
+            }
+          });
+        }
+      })
+    }
+
     $(() => {
       // submit form tambah
       $('#form_tambah').validate({
@@ -324,6 +448,66 @@
                 });
               } else {
                 $('#modal_tambah').modal('hide');
+                Swal.fire({
+                  type: 'error',
+                  title: `${response.title}`,
+                  text: `${response.text}`,
+                })
+              }
+            },
+            error: (err) => {
+              Swal.fire({
+                type: 'error',
+                title: `Error Submit Data: ${err}.`
+              })
+            }
+          });
+        }
+      });
+
+      // submit form tambah lampiran
+      $('#form_tambah_lampiran').validate({
+        errorElement: 'span',
+        errorPlacement: (error, element) => {
+          error.addClass('invalid-feedback');
+          element.closest('.notif').append(error);
+        },
+        highlight: (element, errorClass, validClass) => {
+          $(element).addClass('is-invalid');
+        },
+        unhighlight: (element, errorClass, validClass) => {
+          $(element).removeClass('is-invalid');
+        },
+        submitHandler: () => {
+          let form = $('#form_tambah_lampiran')[0];
+          let isi_form = new FormData(form);
+          $.ajax({
+            url: '<?php echo base_url('petugas/surat-keluar/simpan-lampiran') ?>',
+            method: "POST",
+            data: isi_form,
+            dataType: "json",
+            enctype: 'multipart/form-data',
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: (response) => {
+              if (response.status) {
+                $('#modal_tambah_lampiran').modal('hide');
+                $('#modal_lampiran').modal('hide');
+                Swal.fire({
+                  type: 'success',
+                  title: `${response.title}`,
+                  text: `${response.text}`,
+                  button: {
+                    text: "OK",
+                    value: "OK"
+                  }
+                }).then((value) => {
+                  location.reload();
+                });
+              } else {
+                $('#modal_tambah_lampiran').modal('hide');
+                $('#modal_lampiran').modal('hide');
                 Swal.fire({
                   type: 'error',
                   title: `${response.title}`,
