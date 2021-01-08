@@ -8,6 +8,7 @@ class Pengajuan_surat extends CI_Controller
     parent::__construct();
     is_warga();
     $this->load->model('pengajuan_model', 'pengajuan');
+    $this->load->library('Pdf');
   }
 
   public function index()
@@ -124,5 +125,35 @@ class Pengajuan_surat extends CI_Controller
     ];
 
     echo json_encode($this->pengajuan->insert($data));
+  }
+
+  public function cetak($id_pengajuan)
+  {
+    $pengajuan = $this->pengajuan->get_by_id($id_pengajuan);
+    if ($pengajuan['id_pengguna'] == $this->session->userdata('id_pengguna')) {
+      $jenis_surat = $pengajuan['jenis_surat'];
+      $fetch['pengajuan'] = $pengajuan;
+
+      if ($jenis_surat == 'Surat Keterangan Beda Nama') {
+        $this->load->view('surat_keterangan_beda_nama', $fetch);
+      } else if ($jenis_surat == 'Surat Keterangan Pengantar Nikah') {
+        $this->load->view('surat_keterangan_pengantar_nikah', $fetch);
+      } else if ($jenis_surat == 'Surat Keterangan Usaha') {
+        $this->load->view('surat_keterangan_usaha', $fetch);
+      } else if ($jenis_surat == 'Surat Pengantar Akta Kelahiran') {
+        $this->load->view('surat_pengantar_akta_kelahiran', $fetch);
+      } else if ($jenis_surat == 'Surat Pengantar Akta Kematian') {
+        $this->load->view('surat_pengantar_akta_kematian', $fetch);
+      } else {
+        show_404();
+      }
+
+      $data = [
+        'status' => '3',
+      ];
+      $this->pengajuan->update($id_pengajuan, $data);
+    } else {
+      show_404();
+    }
   }
 }

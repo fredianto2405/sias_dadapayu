@@ -13,6 +13,11 @@
               </ol>
             </nav>
           </div>
+          <?php if ($this->session->flashdata('tanggal_mulai')) : ?>
+            <div class="col-lg-6 col-5 text-right">
+              <a href="<?php echo base_url(strtolower($this->session->userdata('hak_akses')) . '/laporan-surat-keluar/cetak/' . $this->session->flashdata('tanggal_mulai') . '/' . $this->session->flashdata('tanggal_selesai')); ?>" target="_blank" class="btn btn-sm btn-neutral">Cetak Laporan</a>
+            </div>
+          <?php endif; ?>
         </div>
       </div>
     </div>
@@ -62,7 +67,7 @@
                   <th style="width: 6%;">No</th>
                   <th style="width: 23%">Kode Klasifikasi</th>
                   <th style="width: 25%">Isi Ringkas</th>
-                  <th style="width: 23%">Dari</th>
+                  <th style="width: 23%">Kepada</th>
                   <th style="width: 23%">No. & Tgl. Surat</th>
                 </tr>
               </thead>
@@ -76,22 +81,29 @@
                 </tr>
               </tfoot>
               <tbody>
-                <?php foreach ($laporan_surat_keluar as $data) : ?>
-                  <tr>
-                    <td><?php echo $no++; ?></td>
-                    <td><?php echo $data['kode']; ?> - <?php echo $data['tentang']; ?></td>
-                    <td><?php echo $data['isi_ringkas']; ?></td>
-                    <td><?php echo $data['kepada']; ?></td>
-                    <td>
-                      Nomor Surat:<br>
-                      <?php echo $data['nomor_surat']; ?><br>
-                      <br>
+                <?php
+                $laporan_surat_keluar = $this->session->flashdata('laporan_surat_keluar');
+                if ($laporan_surat_keluar) :
+                  foreach ($laporan_surat_keluar as $data) :
+                ?>
+                    <tr>
+                      <td><?php echo $no++; ?></td>
+                      <td><?php echo $data['kode']; ?> - <?php echo $data['tentang']; ?></td>
+                      <td><?php echo $data['isi_ringkas']; ?></td>
+                      <td><?php echo $data['kepada']; ?></td>
+                      <td>
+                        Nomor Surat:<br>
+                        <?php echo $data['nomor_surat']; ?><br>
+                        <br>
 
-                      Tanggal Surat:<br>
-                      <?php echo indonesian_date($data['tanggal_surat']); ?>
-                    </td>
-                  </tr>
-                <?php endforeach; ?>
+                        Tanggal Surat:<br>
+                        <?php echo indonesian_date($data['tanggal_surat']); ?>
+                      </td>
+                    </tr>
+                <?php
+                  endforeach;
+                endif;
+                ?>
               </tbody>
             </table>
           </div>

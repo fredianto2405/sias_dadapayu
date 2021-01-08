@@ -63,7 +63,7 @@
                       <?php if ($data['status'] == 0 || $data['status'] == 1) : ?>
                         <button type="button" onclick="rincian('<?php echo $data['id_pengajuan']; ?>')" class="btn btn-sm btn-primary"><i class="fa fa-plus-circle"></i></button>
                       <?php else : ?>
-                        <a href="<?php echo base_url('warga/pengajuan-surat/cetak/' . $data['id_pengajuan']); ?>" class="btn btn-sm btn-success"><i class="fa fa-print"></i></a>
+                        <a href="<?php echo base_url('warga/pengajuan-surat/cetak/' . $data['id_pengajuan']); ?>" class="btn btn-sm btn-success" target="_blank"><i class="fa fa-print"></i></a>
                       <?php endif; ?>
                     </td>
                     <td><?php echo $data2->nama; ?></td>
