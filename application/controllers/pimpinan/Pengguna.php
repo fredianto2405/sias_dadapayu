@@ -51,6 +51,7 @@ class Pengguna extends CI_Controller
     ];
 
     $password_default = date('dmY', strtotime($this->input->post('tanggal_lahir')));
+    $foto = uniqid();
 
     $data = [
       'nama_pengguna' => $this->input->post('nama_pengguna'),
@@ -58,9 +59,7 @@ class Pengguna extends CI_Controller
       'hak_akses' => $this->input->post('hak_akses'),
       'status' => '0',
       'data' => json_encode($data_pengguna),
-      'ktp' => 'default.jpg',
-      'kk' => 'default.jpg',
-      'foto' => 'default.jpg',
+      'foto' => $this->upload_files('./upload/pengguna/', $foto, 'foto'),
     ];
 
     echo json_encode($this->pengguna->insert($data));
@@ -90,6 +89,36 @@ class Pengguna extends CI_Controller
       'data' => json_encode($data_pengguna),
     ];
 
+    if ($this->input->post('edit_kata_sandi')) {
+      $data['kata_sandi'] = password_hash($this->input->post('edit_kata_sandi'), PASSWORD_DEFAULT);
+    }
+
+    if (!empty($_FILES['edit_foto']['name'])) {
+      $foto = uniqid();
+      $data['foto'] = $this->upload_files('./upload/pengguna/', $foto, 'edit_foto');
+    }
+
     echo json_encode($this->pengguna->update($id_pengguna, $data));
+  }
+
+  // file upload
+  private function upload_files($path, $title, $files)
+  {
+    $config = [
+      'upload_path' => $path,
+      'allowed_types' => 'jpg|jpeg|png',
+      'overwrite' => TRUE,
+    ];
+
+    $this->load->library('upload', $config);
+    $file_name = $title . '.jpg';
+    $config['file_name'] = $file_name;
+    $this->upload->initialize($config);
+
+    if ($this->upload->do_upload($files)) {
+      return $file_name;
+    } else {
+      return "default.pdf";
+    }
   }
 }

@@ -13,6 +13,11 @@ class Pengguna_model extends CI_Model
     return $this->db->get_where('pengguna', ['id_pengguna' => $id_pengguna])->row_array();
   }
 
+  public function is_exist($nama_pengguna)
+  {
+    return $this->db->get_where('pengguna', ['nama_pengguna' => $nama_pengguna])->count_all_results();
+  }
+
   public function count_all()
   {
     $this->db->select('*');

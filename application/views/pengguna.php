@@ -8,7 +8,7 @@
             <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
               <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                 <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                <li class="breadcrumb-item"><a href="<?php echo base_url('beranda'); ?>">Beranda</a></li>
+                <li class="breadcrumb-item"><a href="<?php echo base_url(strtolower($this->session->userdata('hak_akses')) . '/beranda'); ?>">Beranda</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Pengguna</li>
               </ol>
             </nav>
@@ -208,26 +208,6 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="ktp" class="form-control-label">KTP</label>
-                  <div class="custom-file">
-                    <input type="file" name="ktp" class="custom-file-input" id="customFileLang" lang="en">
-                    <label class="custom-file-label" for="customFileLang"></label>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="kk" class="form-control-label">Kartu Keluarga</label>
-                  <div class="custom-file">
-                    <input type="file" name="kk" class="custom-file-input" id="customFileLang" lang="en">
-                    <label class="custom-file-label" for="customFileLang"></label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
                   <label for="foto" class="form-control-label">Pas Foto</label>
                   <div class="custom-file">
                     <input type="file" name="foto" class="custom-file-input" id="customFileLang" lang="en">
@@ -287,6 +267,12 @@
                     <option value="1">Aktif</option>
                     <option value="0">Tidak Aktif</option>
                   </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="edit_kata_sandi" class="form-control-label">Kata Sandi</label>
+                  <input type="password" name="edit_kata_sandi" id="edit_kata_sandi" class="form-control" placeholder="Masukkan kata sandi baru">
                 </div>
               </div>
             </div>
@@ -385,26 +371,6 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="edit_ktp" class="form-control-label">KTP</label>
-                  <div class="custom-file">
-                    <input type="file" name="edit_ktp" class="custom-file-input" id="customFileLang" lang="en">
-                    <label class="custom-file-label" for="customFileLang"></label>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="edit_kk" class="form-control-label">Kartu Keluarga</label>
-                  <div class="custom-file">
-                    <input type="file" name="edit_kk" class="custom-file-input" id="customFileLang" lang="en">
-                    <label class="custom-file-label" for="customFileLang"></label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
                   <label for="edit_foto" class="form-control-label">Pas Foto</label>
                   <div class="custom-file">
                     <input type="file" name="edit_foto" class="custom-file-input" id="customFileLang" lang="en">
@@ -478,6 +444,7 @@
             method: "POST",
             data: isi_form,
             dataType: "json",
+            enctype: 'multipart/form-data',
             cache: false,
             contentType: false,
             processData: false,
@@ -535,6 +502,7 @@
             method: "POST",
             data: isi_form,
             dataType: "json",
+            enctype: 'multipart/form-data',
             cache: false,
             contentType: false,
             processData: false,
